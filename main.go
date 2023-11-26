@@ -63,7 +63,7 @@ func main() {
 			Get(gluetunPortApi)
 
 		if err != nil || resp.IsError() {
-			log.Fatalf("failed to fetch port mapping from gluetun: %v, %d", err, resp.StatusCode())
+			log.Printf("failed to fetch port mapping from gluetun: %v, %d", err, resp.StatusCode())
 		}
 
 		if portMapping.Port == 0 {
@@ -77,7 +77,7 @@ func main() {
 				PeerPort: &transmissionPeerPort,
 			})
 			if err != nil {
-				log.Fatalf("failed to set transmission peer port: %v", err)
+				log.Printf("failed to set transmission peer port: %v", err)
 			} else {
 				previousExternalPort = portMapping.Port
 				log.Printf("updated transmission peer port to: %d", transmissionPeerPort)
