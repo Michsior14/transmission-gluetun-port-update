@@ -1,0 +1,74 @@
+name: CI
+
+on: push
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: "go.mod"
+          cache: false # golangci-lint-action does caching
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v3
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: "go.mod"
+
+      - name: Test
+        run: go test -race -v ./...
+
+  build:
+    name: Build
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        os: ["linux", "darwin"]
+        arch: ["amd64", "arm64"]
+    env:
+      app: transmission-gluetun-port.${{ matrix.os }}-${{ matrix.arch }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: "go.mod"
+
+      - name: Build
+        run: go build -o ${{ env.app }} -v ./...
+        env:
+          GOOS: ${{ matrix.os }}
+          GOARCH: ${{ matrix.arch }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.app }}
+          path: ${{ env.app }}
+          if-no-files-found: error
