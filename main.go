@@ -26,6 +26,7 @@ var (
 	gluetunHostname = getEnv("GLUETUN_HOSTNAME", "127.0.0.1")
 	gluetunPort     = getEnv("GLUETUN_PORT", "8000")
 
+	initialDelayStr  = getEnv("INITIAL_DELAY", "5s")
 	checkIntervalStr = getEnv("CHECK_INTERVAL", "1m")
 	errorIntervalStr = getEnv("ERROR_INTERVAL", "5s")
 )
@@ -35,12 +36,15 @@ func init() {
 }
 
 func main() {
+	initialDelay, _ := time.ParseDuration(initialDelayStr)
 	checkInterval, _ := time.ParseDuration(checkIntervalStr)
 	errorInterval, _ := time.ParseDuration(errorIntervalStr)
 	previousExternalPort := uint16(0)
 	gluetunPortApi := fmt.Sprintf("http://%s:%s/v1/openvpn/portforwarded", gluetunHostname, gluetunPort)
 	errorCount := 0
 	maxErrorCount := 5
+
+	time.Sleep(initialDelay)
 
 	httpClient := resty.New()
 
@@ -76,9 +80,10 @@ func main() {
 			})
 			if err != nil {
 				log.Fatalf("failed to set transmission peer port: %v", err)
+			} else {
+				previousExternalPort = portMapping.Port
+				log.Printf("updated transmission peer port to: %d", transmissionPeerPort)
 			}
-			previousExternalPort = portMapping.Port
-			log.Printf("updated transmission peer port to: %d", transmissionPeerPort)
 		}
 
 		if err != nil && errorCount < maxErrorCount {

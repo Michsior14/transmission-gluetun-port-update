@@ -18,5 +18,6 @@ transmission-gluetun-port -h
 | `TRANSMISSION_PASSWORD` | Transmission password | - |
 | `GLUETUN_HOST` | Gluetun api host | `127.0.0.1` |
 | `GLUETUN_PORT` | Gluetun api port | `8000` |
+| `INITIAL_DELAY` | Initial delay ([format](https://pkg.go.dev/time#ParseDuration)) | `5s` |
 | `CHECK_INTERVAL` | Update interval ([format](https://pkg.go.dev/time#ParseDuration)) | `1m` |
 | `ERROR_INTERVAL` | Update interval in case of error ([format](https://pkg.go.dev/time#ParseDuration)) | `5s` |
