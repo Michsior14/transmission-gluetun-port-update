@@ -18,14 +18,17 @@ type GluetunResponse struct {
 }
 
 var (
+	// Transmission
 	transmissionHostname = flag.String("transmission-hostname", "127.0.0.1", "transmission hostname")
 	transmissionPort     = flag.Int("transmission-port", 9091, "transmission port")
 	transmissionUsername = os.Getenv("TRANSMISSION_USERNAME")
 	transmissionPassword = os.Getenv("TRANSMISSION_PASSWORD")
 
+	// Gluetun
 	gluetunHostname = getEnv("GLUETUN_HOSTNAME", "127.0.0.1")
 	gluetunPort     = getEnv("GLUETUN_PORT", "8000")
 
+	// Control flow
 	initialDelayStr  = getEnv("INITIAL_DELAY", "5s")
 	checkIntervalStr = getEnv("CHECK_INTERVAL", "1m")
 	errorIntervalStr = getEnv("ERROR_INTERVAL", "5s")
@@ -47,10 +50,10 @@ func main() {
 	time.Sleep(initialDelay)
 
 	httpClient := resty.New()
-
 	transmissionClient, err := transmissionrpc.New(*transmissionHostname, transmissionUsername, transmissionPassword, &transmissionrpc.AdvancedConfig{
 		Port: uint16(*transmissionPort),
 	})
+
 	if err != nil {
 		log.Fatalf("failed to create transmission client: %v", err)
 	}
@@ -76,6 +79,7 @@ func main() {
 			err = transmissionClient.SessionArgumentsSet(context.Background(), transmissionrpc.SessionArguments{
 				PeerPort: &transmissionPeerPort,
 			})
+
 			if err != nil {
 				log.Printf("failed to set transmission peer port: %v", err)
 			} else {
@@ -94,6 +98,9 @@ func main() {
 	}
 }
 
+/**
+ * Return fallback fallback if environment variable is not set or empty
+ */
 func getEnv(key, fallback string) string {
 	value := os.Getenv(key)
 	if len(value) == 0 {
