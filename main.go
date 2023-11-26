@@ -69,9 +69,7 @@ func main() {
 		if portMapping.Port == 0 {
 			err = errors.New("empty port")
 			log.Printf("new port is not yet assigned, %v", err)
-		} else if portMapping.Port == previousExternalPort {
-			log.Printf("external port is unchanged: %d", portMapping.Port)
-		} else {
+		} else if portMapping.Port != previousExternalPort {
 			log.Printf("external port changed to: %d", portMapping.Port)
 
 			transmissionPeerPort := int64(portMapping.Port)
