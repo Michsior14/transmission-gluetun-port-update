@@ -6,11 +6,12 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/url"
 	"os"
 	"time"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/hekmon/transmissionrpc/v2"
+	"github.com/hekmon/transmissionrpc/v3"
 )
 
 type GluetunResponse struct {
@@ -50,10 +51,17 @@ func main() {
 	time.Sleep(initialDelay)
 
 	httpClient := resty.New()
-	transmissionClient, err := transmissionrpc.New(*transmissionHostname, transmissionUsername, transmissionPassword, &transmissionrpc.AdvancedConfig{
-		Port: uint16(*transmissionPort),
-	})
+	authInfo := ""
+	if transmissionUsername != "" && transmissionPassword != "" {
+		authInfo = fmt.Sprintf("%s:%s@", transmissionUsername, transmissionPassword)
+	}
 
+	endpoint, err := url.Parse(fmt.Sprintf("http://%s%s:%d/transmission/rpc", authInfo, *transmissionHostname, *transmissionPort))
+	if err != nil {
+		log.Fatalf("failed to parse transmission endpoint: %v", err)
+	}
+
+	transmissionClient, err := transmissionrpc.New(endpoint, nil)
 	if err != nil {
 		log.Fatalf("failed to create transmission client: %v", err)
 	}
