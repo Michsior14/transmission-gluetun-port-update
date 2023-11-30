@@ -5,6 +5,7 @@ go 1.21
 require (
 	github.com/go-resty/resty/v2 v2.10.0
 	github.com/hekmon/transmissionrpc/v2 v2.0.1
+	github.com/hekmon/transmissionrpc/v3 v3.0.0
 )
 
 require (
