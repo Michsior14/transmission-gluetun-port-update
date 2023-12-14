@@ -71,7 +71,7 @@ jobs:
           GOARCH: ${{ matrix.arch }}
 
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.app }}
           path: ${{ env.app }}
