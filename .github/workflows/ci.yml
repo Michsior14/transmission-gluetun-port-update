@@ -43,7 +43,6 @@ jobs:
         run: go test -race -v ./...
 
   build:
-    if: ${{ !startsWith(github.event.ref, 'refs/tags/v') }}
     name: Build
     needs: [lint, test]
     runs-on: ubuntu-latest
@@ -77,29 +76,3 @@ jobs:
           name: ${{ env.app }}
           path: ${{ env.app }}
           if-no-files-found: error
-
-  release:
-    if: ${{ startsWith(github.event.ref, 'refs/tags/v') }}
-    name: Release
-    needs: [lint, test]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: "go.mod"
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v5
-        with:
-          version: latest
-          args: release --clean
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
