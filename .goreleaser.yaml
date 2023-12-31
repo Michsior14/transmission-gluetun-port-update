@@ -17,6 +17,9 @@ builds:
       - amd64
       - arm
       - arm64
+    ignore:
+      - goos: darwin
+        goarch: arm
 
 archives:
   - format: tar.gz

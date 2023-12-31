@@ -53,6 +53,9 @@ jobs:
       matrix:
         os: ["linux", "darwin"]
         arch: ["amd64", "arm", "arm64"]
+        exclude:
+          - os: darwin
+            arch: arm
     env:
       app: transmission-gluetun-port.${{ matrix.os }}-${{ matrix.arch }}
     steps:
