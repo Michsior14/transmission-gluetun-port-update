@@ -3,7 +3,7 @@ module github.com/Michsior14/transmission-gluetun-port-update
 go 1.21
 
 require (
-	github.com/go-resty/resty/v2 v2.15.0
+	github.com/go-resty/resty/v2 v2.15.1
 	github.com/hekmon/transmissionrpc/v3 v3.0.0
 )
 
