@@ -12,12 +12,16 @@ transmission-gluetun-port -h
 
 ## Available environment variables
 
-| Name | Description | Default |
-|------|-------------|---------|
-| `TRANSMISSION_USER` | Transmission user | - |
-| `TRANSMISSION_PASSWORD` | Transmission password | - |
-| `GLUETUN_HOST` | Gluetun api host | `127.0.0.1` |
-| `GLUETUN_PORT` | Gluetun api port | `8000` |
-| `INITIAL_DELAY` | Initial delay ([format](https://pkg.go.dev/time#ParseDuration)) | `5s` |
-| `CHECK_INTERVAL` | Update interval ([format](https://pkg.go.dev/time#ParseDuration)) | `1m` |
-| `ERROR_INTERVAL` | Update interval in case of error ([format](https://pkg.go.dev/time#ParseDuration)) | `5s` |
+| Name                    | Description                                                                        | Default     |
+|-------------------------|------------------------------------------------------------------------------------|-------------|
+| `TRANSMISSION_USER`     | Transmission user                                                                  | -           |
+| `TRANSMISSION_PASSWORD` | Transmission password                                                              | -           |
+| `GLUETUN_HOST`          | Gluetun api host                                                                   | `127.0.0.1` |
+| `GLUETUN_PORT`          | Gluetun api port                                                                   | `8000`      |
+| `GLUETUN_AUTH_TYPE`     | Gluetun auth type: `basic`, `apikey`                                               | `none`      |
+| `GLUETUN_AUTH_USERNAME` | Gluetun basic auth username                                                        | -           |
+| `GLUETUN_AUTH_PASSWORD` | Gluetun basic auth password                                                        | -           |
+| `GLUETUN_AUTH_API_KEY`  | Gluetun auth api key                                                               | -           |
+| `INITIAL_DELAY`         | Initial delay ([format](https://pkg.go.dev/time#ParseDuration))                    | `5s`        |
+| `CHECK_INTERVAL`        | Update interval ([format](https://pkg.go.dev/time#ParseDuration))                  | `1m`        |
+| `ERROR_INTERVAL`        | Update interval in case of error ([format](https://pkg.go.dev/time#ParseDuration)) | `5s`        |
