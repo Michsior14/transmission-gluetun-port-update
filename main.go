@@ -26,13 +26,21 @@ var (
 	transmissionPassword = os.Getenv("TRANSMISSION_PASSWORD")
 
 	// Gluetun
-	gluetunHostname = getEnv("GLUETUN_HOSTNAME", "127.0.0.1")
-	gluetunPort     = getEnv("GLUETUN_PORT", "8000")
+	gluetunHostname     = getEnv("GLUETUN_HOSTNAME", "127.0.0.1")
+	gluetunPort         = getEnv("GLUETUN_PORT", "8000")
+	gluetunAuthType     = getEnv("GLUETUN_AUTH_TYPE", "none")
+	gluetunAuthUsername = os.Getenv("GLUETUN_AUTH_USERNAME")
+	gluetunAuthPassword = os.Getenv("GLUETUN_AUTH_PASSWORD")
+	gluetunAuthAPIKey   = os.Getenv("GLUETUN_AUTH_API_KEY")
 
 	// Control flow
 	initialDelayStr  = getEnv("INITIAL_DELAY", "5s")
 	checkIntervalStr = getEnv("CHECK_INTERVAL", "1m")
 	errorIntervalStr = getEnv("ERROR_INTERVAL", "5s")
+
+	gluetunAuthTypeBasic        = "basic"
+	gluetunAuthTypeAPIKey       = "apikey"
+	gluetunAuthTypeAPIKeyHeader = "X-API-Key"
 )
 
 func init() {
@@ -66,13 +74,22 @@ func main() {
 		log.Fatalf("failed to create transmission client: %v", err)
 	}
 
+	log.Printf("fetching port mapping from gluetun using auth type: %s", gluetunAuthType)
+
 	for {
 		portMapping := &GluetunResponse{}
-		resp, err := httpClient.R().
+		req := httpClient.R().
 			SetResult(portMapping).
-			ForceContentType("application/json").
-			Get(gluetunPortApi)
+			ForceContentType("application/json")
 
+		switch gluetunAuthType {
+		case gluetunAuthTypeBasic:
+			req.SetBasicAuth(gluetunAuthUsername, gluetunAuthPassword)
+		case gluetunAuthTypeAPIKey:
+			req.SetHeader(gluetunAuthTypeAPIKeyHeader, gluetunAuthAPIKey)
+		}
+
+		resp, err := req.Get(gluetunPortApi)
 		if err != nil || resp.IsError() {
 			log.Printf("failed to fetch port mapping from gluetun: %v, %d", err, resp.StatusCode())
 		}
