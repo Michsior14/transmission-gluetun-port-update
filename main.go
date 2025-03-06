@@ -61,7 +61,7 @@ func main() {
 	httpClient := resty.New()
 	authInfo := ""
 	if transmissionUsername != "" && transmissionPassword != "" {
-		authInfo = fmt.Sprintf("%s:%s@", transmissionUsername, transmissionPassword)
+		authInfo = fmt.Sprintf("%s@", url.UserPassword(transmissionUsername, transmissionPassword).String())
 	}
 
 	endpoint, err := url.Parse(fmt.Sprintf("http://%s%s:%d/transmission/rpc", authInfo, *transmissionHostname, *transmissionPort))
