@@ -16,7 +16,8 @@ transmission-gluetun-port -h
 |-------------------------|------------------------------------------------------------------------------------|-------------|
 | `TRANSMISSION_USER`     | Transmission user                                                                  | -           |
 | `TRANSMISSION_PASSWORD` | Transmission password                                                              | -           |
-| `GLUETUN_HOST`          | Gluetun api host                                                                   | `127.0.0.1` |
+| `GLUETUN_PROTOCOL`      | Gluetun api protocol: `http`, `https`                                              | `http`      |
+| `GLUETUN_HOSTNAME`      | Gluetun api hostname                                                               | `127.0.0.1` |
 | `GLUETUN_PORT`          | Gluetun api port                                                                   | `8000`      |
 | `GLUETUN_AUTH_TYPE`     | Gluetun auth type: `basic`, `apikey`                                               | `none`      |
 | `GLUETUN_AUTH_USERNAME` | Gluetun basic auth username                                                        | -           |
