@@ -23,7 +23,7 @@ jobs:
           cache: false # golangci-lint-action does caching
 
       - name: Lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
 
   test:
     name: Test
