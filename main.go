@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -55,6 +56,11 @@ func main() {
 	checkInterval, _ := time.ParseDuration(checkIntervalStr)
 	errorInterval, _ := time.ParseDuration(errorIntervalStr)
 	previousExternalPort := uint16(0)
+
+	if !strings.HasPrefix(gluetunEndpoint, "/") {
+		gluetunEndpoint = fmt.Sprintf("/%s", gluetunEndpoint)
+	}
+
 	gluetunPortApi := fmt.Sprintf("%s://%s:%s%s", gluetunProtocol, gluetunHostname, gluetunPort, gluetunEndpoint)
 	errorCount := 0
 	maxErrorCount := 5

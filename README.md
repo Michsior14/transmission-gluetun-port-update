@@ -20,7 +20,7 @@ transmission-gluetun-port -h
 | `GLUETUN_PROTOCOL`      | Gluetun api protocol: `http`, `https`                                              | `http`                      |
 | `GLUETUN_HOSTNAME`      | Gluetun api hostname                                                               | `127.0.0.1`                 |
 | `GLUETUN_PORT`          | Gluetun api port                                                                   | `8000`                      |
-| `GLUETUN_ENDPOINT`      | Gluetun api current port endpoint                                                  | `/v1/openvpn/portforwarded` |
+| `GLUETUN_ENDPOINT`      | Gluetun API endpoint path for port forwarding status                               | `/v1/openvpn/portforwarded` |
 | `GLUETUN_AUTH_TYPE`     | Gluetun auth type: `basic`, `apikey`                                               | `none`                      |
 | `GLUETUN_AUTH_USERNAME` | Gluetun basic auth username                                                        | -                           |
 | `GLUETUN_AUTH_PASSWORD` | Gluetun basic auth password                                                        | -                           |
