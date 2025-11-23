@@ -54,7 +54,7 @@ func main() {
 	checkInterval, _ := time.ParseDuration(checkIntervalStr)
 	errorInterval, _ := time.ParseDuration(errorIntervalStr)
 	previousExternalPort := uint16(0)
-	gluetunPortApi := fmt.Sprintf("%s://%s:%s/v1/openvpn/portforwarded", gluetunProtocol, gluetunHostname, gluetunPort)
+	gluetunPortApi := fmt.Sprintf("%s://%s:%s/openvpn/portforwarded", gluetunProtocol, gluetunHostname, gluetunPort)
 	errorCount := 0
 	maxErrorCount := 5
 
