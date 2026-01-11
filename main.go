@@ -31,7 +31,7 @@ var (
 	gluetunProtocol     = getEnv("GLUETUN_PROTOCOL", "http")
 	gluetunHostname     = getEnv("GLUETUN_HOSTNAME", "127.0.0.1")
 	gluetunPort         = getEnv("GLUETUN_PORT", "8000")
-	gluetunEndpoint     = getEnv("GLUETUN_ENDPOINT", "/v1/openvpn/portforwarded")
+	gluetunEndpoint     = getEnv("GLUETUN_ENDPOINT", "/v1/portforward")
 	gluetunAuthType     = getEnv("GLUETUN_AUTH_TYPE", "none")
 	gluetunAuthUsername = os.Getenv("GLUETUN_AUTH_USERNAME")
 	gluetunAuthPassword = os.Getenv("GLUETUN_AUTH_PASSWORD")
