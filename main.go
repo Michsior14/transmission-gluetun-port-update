@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"path"
 	"strings"
 	"time"
 
@@ -74,7 +75,8 @@ func main() {
 		authInfo = fmt.Sprintf("%s@", url.UserPassword(transmissionUsername, transmissionPassword).String())
 	}
 
-	endpoint, err := url.Parse(fmt.Sprintf("%s://%s%s:%d%s/rpc", transmissionProtocol, authInfo, *transmissionHostname, *transmissionPort, transmissionRpcUrl))
+	rpcPath := path.Join("/", transmissionRpcUrl, "rpc")
+	endpoint, err := url.Parse(fmt.Sprintf("%s://%s%s:%d%s", transmissionProtocol, authInfo, *transmissionHostname, *transmissionPort, rpcPath))
 	if err != nil {
 		log.Fatalf("failed to parse transmission endpoint: %v", err)
 	}
