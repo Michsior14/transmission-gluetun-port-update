@@ -26,6 +26,7 @@ var (
 	transmissionUsername = os.Getenv("TRANSMISSION_USERNAME")
 	transmissionPassword = os.Getenv("TRANSMISSION_PASSWORD")
 	transmissionProtocol = getEnv("TRANSMISSION_PROTOCOL", "http")
+	transmissionRpcUrl   = getEnv("TRANSMISSION_RPC_URL", "/transmission")
 
 	// Gluetun
 	gluetunProtocol     = getEnv("GLUETUN_PROTOCOL", "http")
@@ -73,7 +74,7 @@ func main() {
 		authInfo = fmt.Sprintf("%s@", url.UserPassword(transmissionUsername, transmissionPassword).String())
 	}
 
-	endpoint, err := url.Parse(fmt.Sprintf("%s://%s%s:%d/transmission/rpc", transmissionProtocol, authInfo, *transmissionHostname, *transmissionPort))
+	endpoint, err := url.Parse(fmt.Sprintf("%s://%s%s:%d%s/rpc", transmissionProtocol, authInfo, *transmissionHostname, *transmissionPort, transmissionRpcUrl))
 	if err != nil {
 		log.Fatalf("failed to parse transmission endpoint: %v", err)
 	}
